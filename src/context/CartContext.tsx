@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
 
 export type CartItem = {
-    id: number;
+    id: string;
     title: string;
     price: number;
     quantity: number;
@@ -11,7 +11,7 @@ export type CartItem = {
 export type CartContextType = {
     cart: CartItem[];
     addToCart: (item: CartItem) => void;
-    removeFromCart: (id: number) => void;
+    removeFromCart: (id: string) => void;
     clearCart: () => void;
 };
 
@@ -33,7 +33,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         });
     };
 
-    const removeFromCart = (id: number) => {
+    const removeFromCart = (id: string) => {
         setCart((prev) => prev.filter((p) => p.id !== id));
     };
 

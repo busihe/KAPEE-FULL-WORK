@@ -2,24 +2,25 @@ export type Product = {
   id: string;
   title: string;
   image: string;
-  category: string;
+  category?: string;   // made optional, backend may not send it
   price: number;
   compareAt?: number;
-  rating: number; // 0-5
-  reviews: number;
-  description: string;
+  rating?: number;     // made optional
+  reviews?: number;    // made optional
+  description?: string; 
   badge?: { label: string; color: string };
   tag?: 'featured' | 'popular' | 'new';
 };
 
+// Keep this as fallback dummy data
 export const products: Product[] = [
   {
     id: 'p1',
-    title: 'Noise Cancelling Headphones ZX-500',
-    image: 'https://picsum.photos/600/400?random=101',
+    title: ' Headphones Noise Cancelling',
+    image: 'https://kapee.presslayouts.com/wp-content/uploads/2020/07/electronics-slider-2.png',
     category: 'Headphones',
-    price: 129.99,
-    compareAt: 169.99,
+    price: 130,
+    compareAt: 169,
     rating: 4,
     reviews: 182,
     description: 'Wireless over-ear ANC headphones with 30h battery.',
@@ -29,10 +30,10 @@ export const products: Product[] = [
   {
     id: 'p2',
     title: '4K Smart TV 55” Ultra HDR',
-    image: 'https://picsum.photos/600/400?random=102',
+    image: 'https://m.media-amazon.com/images/I/81KqqI31wcL._AC_SL1500_.jpg',
     category: 'TVs',
-    price: 599.0,
-    compareAt: 749.0,
+    price: 699.0,
+    compareAt: 760.0,
     rating: 5,
     reviews: 324,
     description: 'Crisp 4K panel with HDR10+ and streaming apps.',
@@ -42,9 +43,9 @@ export const products: Product[] = [
   {
     id: 'p3',
     title: 'Gaming Laptop RTX 4060',
-    image: 'https://picsum.photos/600/400?random=103',
+    image: 'https://m.media-amazon.com/images/I/71iB6UqXbGL._AC_SL1500_.jpg',
     category: 'Laptops',
-    price: 1299.99,
+    price: 1455.99,
     rating: 4,
     reviews: 91,
     description: '14-core CPU, RTX graphics, 165Hz display.',
@@ -53,10 +54,10 @@ export const products: Product[] = [
   {
     id: 'p4',
     title: 'Smartwatch Pro S',
-    image: 'https://picsum.photos/600/400?random=104',
+    image: 'https://m.media-amazon.com/images/I/61UdOn+Xb8L._AC_SX679_.jpg',
     category: 'Wearables',
     price: 219.0,
-    compareAt: 259.0,
+    compareAt: 359.0,
     rating: 4,
     reviews: 54,
     description: 'AMOLED display, GPS, 7-day battery life.',
@@ -66,7 +67,7 @@ export const products: Product[] = [
   {
     id: 'p5',
     title: 'Mirrorless Camera 24MP',
-    image: 'https://picsum.photos/600/400?random=105',
+    image: 'https://m.media-amazon.com/images/I/61s5kI0U4cL._AC_SL1250_.jpg',
     category: 'Cameras',
     price: 799.0,
     rating: 5,
@@ -77,7 +78,7 @@ export const products: Product[] = [
   {
     id: 'p6',
     title: 'Bluetooth Speaker Mini',
-    image: 'https://picsum.photos/600/400?random=106',
+    image: 'https://m.media-amazon.com/images/I/71LVJ1Sjv8L._AC_SL1500_.jpg',
     category: 'Speakers',
     price: 39.99,
     rating: 4,

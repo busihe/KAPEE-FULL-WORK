@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   FiHome,
@@ -12,112 +13,95 @@ import {
   FiUser,
   FiLogOut,
   FiSend,
+  FiMenu,
+  FiX,
 } from "react-icons/fi";
-import { useEffect, useState } from "react";
 
 function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [adminName, setAdminName] = useState<string>("");
+  const [adminName, setAdminName] = useState<string>("Admin");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Fetch admin details from API (replace with your endpoint)
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
         const res = await fetch("http://localhost:5000/api/admin/me", {
-          credentials: "include", // if using cookies
+          credentials: "include",
         });
         if (res.ok) {
           const data = await res.json();
           setAdminName(data.name || "Admin");
-        } else {
-          setAdminName("Admin");
         }
       } catch (error) {
         console.error("Error fetching admin:", error);
-        setAdminName("Admin");
       }
     };
     fetchAdmin();
   }, []);
 
   const handleLogout = () => {
-    // Optional: Call backend logout endpoint
-    localStorage.removeItem("token"); // if you use JWT in localStorage
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
-  // Helper to check active link
   const isActive = (path: string) => location.pathname === path;
 
+  const navLinks = [
+    { path: "/admin/dashboard", label: "Dashboard", icon: <FiHome /> },
+    { path: "/admin/products", label: "Products", icon: <FiBox /> },
+    { path: "/admin/users", label: "Users", icon: <FiUsers /> },
+    { path: "/admin/orders", label: "Orders", icon: <FiShoppingCart /> },
+    { path: "/admin/contacts", label: "Messages", icon: <FiMail /> },
+    { path: "/admin/subscribe", label: "Subscribe", icon: <FiSend /> },
+    { path: "/admin/reports", label: "Reports", icon: <FiBarChart2 /> },
+  ];
+
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar - fixed */}
-      <aside className="fixed left-0 top-0 h-screen w-64 bg-gray-100 text-black flex flex-col shadow-lg z-50">
-        <div className="p-6 text-2xl font-bold ">
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
+      {/* Mobile Sidebar Toggle */}
+      <div className="lg:hidden fixed top-4 left-4 z-50">
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="text-2xl text-gray-700 focus:outline-none"
+        >
+          <FiMenu />
+        </button>
+      </div>
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed top-0 left-0 h-full w-64 bg-white text-black shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0`}
+      >
+        <div className="p-6 text-2xl font-bold border-b border-yellow-500 flex justify-between items-center">
           DASHBOARD
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="text-xl lg:hidden"
+          >
+            <FiX />
+          </button>
         </div>
         <nav className="flex-1 p-6 space-y-3 overflow-y-auto">
-          <Link
-            to="/admin/dashboard"
-            className={`flex items-center gap-3 p-3 rounded font-semibold hover:bg-yellow-500 ${
-              isActive("/admin/dashboard") ? "bg-yellow-500" : ""
-            }`}
-          >
-            <FiHome /> Dashboard
-          </Link>
-          <Link
-            to="/admin/products"
-            className={`flex items-center gap-3 p-3 rounded font-semibold hover:bg-yellow-500 ${
-              isActive("/admin/products") ? "bg-yellow-500" : ""
-            }`}
-          >
-            <FiBox /> Products
-          </Link>
-          <Link
-            to="/admin/users"
-            className={`flex items-center gap-3 p-3 rounded font-semibold hover:bg-yellow-500 ${
-              isActive("/admin/users") ? "bg-yellow-500" : ""
-            }`}
-          >
-            <FiUsers /> Users
-          </Link>
-          <Link
-            to="/admin/orders"
-            className={`flex items-center gap-3 p-3 rounded font-semibold hover:bg-yellow-500 ${
-              isActive("/admin/orders") ? "bg-yellow-500" : ""
-            }`}
-          >
-            <FiShoppingCart /> Orders
-          </Link>
-          <Link
-            to="/admin/contacts"
-            className={`flex items-center gap-3 p-3 rounded font-semibold hover:bg-yellow-500 ${
-              isActive("/admin/contacts") ? "bg-yellow-500" : ""
-            }`}
-          >
-            <FiMail /> Messages
-          </Link>
-          <Link
-            to="/admin/subscribe"
-            className={`flex items-center gap-3 p-3 rounded font-semibold hover:bg-yellow-500 ${isActive("/admin/subscribe") ? "bg-yellow-500" : ""
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              onClick={() => setSidebarOpen(false)} // close on mobile
+              className={`flex items-center gap-3 p-3 rounded font-semibold hover:bg-yellow-500 ${
+                isActive(link.path) ? "bg-yellow-500" : ""
               }`}
-          >
-            <FiSend /> Subscribe
-          </Link>
-          <Link
-            to="/admin/reports"
-            className={`flex items-center gap-3 p-3 rounded font-semibold hover:bg-yellow-500 ${
-              isActive("/admin/reports") ? "bg-yellow-500" : ""
-            }`}
-          >
-            <FiBarChart2 /> Reports
-          </Link>
+            >
+              {link.icon} {link.label}
+            </Link>
+          ))}
         </nav>
-        {/* Settings button at bottom */}
         <div className="p-6 border-t border-yellow-500">
           <Link
             to="/admin/settings"
+            onClick={() => setSidebarOpen(false)}
             className={`flex items-center gap-3 p-3 rounded font-semibold hover:bg-yellow-500 ${
               isActive("/admin/settings") ? "bg-yellow-500" : ""
             }`}
@@ -127,42 +111,44 @@ function AdminLayout() {
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <div className="flex-1 ml-64 flex flex-col">
-        {/* Navbar - fixed */}
-        <header className="fixed top-0 left-64 right-0 flex items-center justify-between bg-white shadow px-6 py-4 z-40">
-          {/* Search bar */}
-          <div className="flex items-center bg-gray-100 px-3 py-2 rounded-lg w-1/3">
+      {/* Main content area */}
+      <div className="flex-1 flex flex-col lg:ml-64">
+        {/* Navbar */}
+        <header className="fixed top-0 left-0 lg:left-64 right-0 bg-white shadow px-4 py-3 z-30 flex items-center justify-between flex-wrap gap-3">
+          {/* Search Bar */}
+          <div className="flex items-center bg-gray-100 px-3 py-2 rounded-lg w-full max-w-xs sm:max-w-md flex-1 min-w-0">
             <FiSearch className="text-gray-500 mr-2" />
             <input
               type="text"
               placeholder="Search..."
-              className="bg-transparent outline-none flex-1"
+              className="bg-transparent outline-none flex-1 text-sm sm:text-base"
             />
           </div>
 
-          {/* Right side: Notifications + Profile */}
-          <div className="flex items-center gap-6">
+          {/* Right Icons */}
+          <div className="flex items-center gap-3">
             <button className="relative">
               <FiBell className="text-2xl text-gray-600" />
-              <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+              <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
             </button>
 
-            <div className="flex items-center gap-3 bg-gray-100 px-3 py-2 rounded-lg">
-              <FiUser className="text-xl text-gray-600" />
-              <span className="font-semibold">Welcome, {adminName}</span>
+            <div className="flex items-center gap-2 sm:gap-3 bg-gray-100 px-2 sm:px-3 py-2 rounded-lg text-sm sm:text-base overflow-hidden max-w-full">
+              <FiUser className="text-gray-600 text-xl flex-shrink-0" />
+              <span className="font-semibold truncate max-w-[90px] sm:max-w-[150px]">
+                Welcome, {adminName}
+              </span>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-1 text-red-500 font-semibold hover:underline ml-3"
+                className="flex items-center gap-1 text-red-500 font-semibold hover:underline"
               >
-                <FiLogOut /> Logout
+                <FiLogOut className="text-base" /> Logout
               </button>
             </div>
           </div>
         </header>
 
-        {/* Page content with padding to avoid navbar overlap */}
-        <main className="flex-1 mt-20 p-6 overflow-y-auto">
+        {/* Page Content */}
+        <main className="flex-1 mt-20 p-4 sm:p-6 overflow-y-auto min-w-0">
           <Outlet />
         </main>
       </div>

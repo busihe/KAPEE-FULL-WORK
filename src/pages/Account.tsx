@@ -6,6 +6,7 @@ export default function Account() {
   const navigate = useNavigate();
   const { register } = useAuth();
   const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,7 +25,12 @@ export default function Account() {
     try {
       if (register) {
         await register(username, email, password);
-        navigate("/login");
+        setSuccess("Registration successful! Please log in to continue.");
+
+        // Redirect to login after 5 seconds
+        setTimeout(() => {
+          navigate("/login");
+        }, 5000);
       } else {
         setError("Registration function is not available");
       }
@@ -34,14 +40,20 @@ export default function Account() {
   };
 
   return (
-    <section className="container-max my-14 px-4">
-      <div className="max-w-md mx-auto bg-white/90 backdrop-blur-md shadow-xl border border-gray-200 rounded-2xl p-8 animate-fade-in-down">
+    <section className="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-50">
+      <div className="w-full max-w-md bg-white/90 backdrop-blur-md shadow-xl border border-gray-200 rounded-2xl p-8 animate-fade-in-down">
         <h1 className="text-3xl font-extrabold text-yellow-500 mb-2 text-center">
           Create Account 📝
         </h1>
         <p className="text-gray-600 text-center mb-6">
           Join us to start shopping and track your orders.
         </p>
+
+        {success && (
+          <div className="mb-4 text-sm text-green-600 text-center font-medium border border-green-200 bg-green-50 p-2 rounded">
+            {success}
+          </div>
+        )}
 
         {error && (
           <div className="mb-4 text-sm text-red-600 text-center font-medium border border-red-200 bg-red-50 p-2 rounded">

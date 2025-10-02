@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 export default function Hero() {
   return (
     <section className="container-max mt-6 grid gap-4 md:grid-cols-3">
-      {/* Big banner - matches product card design */}
+      {/* Big banner - full width on small, 2/3 on md+ */}
       <Link
         to="/shop"
-        className="card relative col-span-2 overflow-hidden rounded-xl shadow-md transition-transform hover:scale-[1.01]"
+        className="card relative overflow-hidden rounded-xl shadow-md transition-transform hover:scale-[1.01] md:col-span-2"
       >
         <div className="aspect-[4/3] bg-slate-100">
           <img
@@ -26,8 +26,8 @@ export default function Hero() {
         </div>
       </Link>
 
-      {/* Side stack banners */}
-      <div className="grid gap-4">
+      {/* Side banners stacked on small, side-by-side on md+ */}
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
         <Link
           to="/shop"
           className="card overflow-hidden rounded-xl shadow-md transition-transform hover:scale-[1.01]"

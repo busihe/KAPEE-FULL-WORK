@@ -20,13 +20,13 @@ export default function Footer() {
       const data = await res.json();
 
       if (res.ok) {
-        setMessage(" Subscribed successfully!");
+        setMessage("Subscribed successfully!");
         setEmail("");
       } else {
-        setMessage(data.error || " Subscription failed.");
+        setMessage(data.error || "Subscription failed.");
       }
     } catch {
-      setMessage(" Error connecting to server.");
+      setMessage("Error connecting to server.");
     }
 
     setLoading(false);
@@ -61,24 +61,32 @@ export default function Footer() {
         </div>
         <div>
           <h4 className="mb-3 text-lg font-bold">Newsletter</h4>
-          <form className="flex gap-2" onSubmit={handleSubscribe}>
+          <form
+            className="flex flex-col sm:flex-row gap-2"
+            onSubmit={handleSubscribe}
+          >
             <input
-              className="w-full rounded-lg border px-3 py-2"
+              className="w-full rounded-lg border px-3 py-2 text-sm"
               placeholder="Your email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={loading}
             />
             <button
               type="submit"
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg px-4 py-2 transition"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg px-4 py-2 transition disabled:opacity-70 disabled:cursor-not-allowed text-sm"
               disabled={loading}
             >
               {loading ? "Subscribing..." : "Subscribe"}
             </button>
           </form>
-          {message && <p className="mt-2 text-sm text-gray-600">{message}</p>}
+          {message && (
+            <p className="mt-2 text-sm text-gray-600 whitespace-pre-line">
+              {message}
+            </p>
+          )}
         </div>
       </div>
       <div className="border-t py-4 text-center text-sm text-gray-500">

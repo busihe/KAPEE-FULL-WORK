@@ -27,4 +27,6 @@ export async function getProducts(): Promise<Product[]> {
     // 🔹 assign tags in rotation so filtering works
     tag: (["featured", "popular", "new"] as const)[i % 3],
   }));
+
+
 }

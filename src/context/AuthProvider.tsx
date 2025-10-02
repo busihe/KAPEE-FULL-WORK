@@ -19,20 +19,31 @@ export const AuthProvider = ({ children }: Props) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password }),
         });
+            const data = await res.json();
+            console.log("Login response from server:", data);
 
-        if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(errorData.message || "Failed to login");
-        }
+            if (!res.ok) {
+            throw new Error(data.message || "Login failed");
+            }
+ 
+            if (!data.user) {
+            throw new Error("No user data in response");
+            }
 
-        const data = await res.json();
-
-        const loggedInUser: User = {
+            const loggedInUser: User = {
             id: data.user.id,
             username: data.user.username,
             email: data.user.email,
             role: data.user.role,
-        };
+            };
+
+            setUser(loggedInUser);
+            localStorage.setItem("user", JSON.stringify(loggedInUser));
+            localStorage.setItem("token", data.token);
+
+            return loggedInUser;
+
+
 
         // Save user and token
         setUser(loggedInUser);

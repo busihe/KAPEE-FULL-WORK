@@ -14,22 +14,25 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 bg-white shadow-md">
       <TopBar />
+
+      {/* Main Navbar */}
       <div className="w-full border-b">
-        <div className="container-max flex items-center gap-4 py-4">
+        <div className="container-max flex flex-wrap items-center justify-between gap-4 py-4">
+          
           {/* Logo */}
           <Link to="/" className="text-2xl font-extrabold text-yellow-500 hover:text-yellow-600 transition">
-            KAPEE 
+            KAPEE
           </Link>
 
-          {/* Search */}
+          {/* Search (Hidden on mobile) */}
           <div className="hidden md:block flex-1">
             <SearchBar />
           </div>
 
           {/* Auth + Cart */}
-          <nav className="ml-auto flex items-center gap-4">
+          <nav className="flex items-center gap-2 sm:gap-4 ml-auto flex-wrap justify-end w-full sm:w-auto">
             {user ? (
-              <div className="flex items-center gap-3 px-3 py-1 rounded-full border border-green-400 bg-green-50">
+              <div className="flex items-center gap-2 sm:gap-3 px-3 py-1 rounded-full border border-green-400 bg-green-50">
                 <span className="relative flex items-center text-sm text-green-600">
                   <span className="absolute top-0 right-0 w-2 h-2 bg-green-500 rounded-full animate-ping" />
                   <FiUser className="text-xl mr-1" />
@@ -37,7 +40,7 @@ export default function Navbar() {
                 </span>
                 <button
                   onClick={logout}
-                  className="flex items-center gap-1 text-sm border border-red-500 text-red-500 px-3 py-1 rounded hover:bg-red-50 transition"
+                  className="flex items-center gap-1 text-sm border border-red-500 text-red-500 px-2 sm:px-3 py-1 rounded hover:bg-red-50 transition"
                 >
                   <FiLogOut />
                   <span className="hidden sm:inline">Logout</span>
@@ -46,7 +49,7 @@ export default function Navbar() {
             ) : (
               <NavLink
                 to="/account"
-                className="flex items-center gap-2 border border-gray-300 px-3 py-1 rounded-full hover:bg-gray-100 transition"
+                className="flex items-center gap-1 sm:gap-2 border border-gray-300 px-2 sm:px-3 py-1 rounded-full hover:bg-gray-100 transition text-sm"
               >
                 <FiUser />
                 <span className="hidden sm:inline">Hello, Sign In</span>
@@ -56,7 +59,7 @@ export default function Navbar() {
             {/* Cart */}
             <NavLink
               to="/cart"
-              className="relative flex items-center gap-2 border border-yellow-400 text-yellow-600 px-3 py-1 rounded-full hover:bg-yellow-50 transition"
+              className="relative flex items-center gap-1 sm:gap-2 border border-yellow-400 text-yellow-600 px-2 sm:px-3 py-1 rounded-full hover:bg-yellow-50 transition text-sm"
             >
               <FiShoppingCart />
               <span className="hidden sm:inline">Cart</span>
@@ -70,24 +73,36 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Navigation Menu */}
+      {/* Navigation Menu + Mobile Search */}
       <div className="w-full border-t bg-white">
-        <div className="container-max flex items-center gap-3 py-3">
+        <div className="container-max flex flex-wrap items-center gap-3 py-3">
+
+          {/* Category Dropdown */}
           <CategoryMenu />
-          <nav className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-700">
+
+          {/* Page Links */}
+          <nav className="flex flex-wrap items-center gap-3 text-sm font-medium text-gray-700">
             <NavLink
               to="/"
-              className={({ isActive }) => isActive ? 'text-yellow-500 font-semibold' : 'hover:text-yellow-500 transition'}
+              className={({ isActive }) =>
+                isActive
+                  ? 'text-yellow-500 font-semibold'
+                  : 'hover:text-yellow-500 transition'
+              }
             >
               Home
             </NavLink>
-            <NavLink to="/shop" className="hover:text-yellow-500 transition">Shop</NavLink>
-            <NavLink to="/deals" className="hover:text-yellow-500 transition">Sure Deals</NavLink>
-            <NavLink to="/" className="hover:text-yellow-500 transition"></NavLink>
+            <NavLink to="/shop" className="hover:text-yellow-500 transition">
+              Shop
+            </NavLink>
+            <NavLink to="/deals" className="hover:text-yellow-500 transition">
+              Sure Deals
+            </NavLink>
+            {/* Remove or add more links as needed */}
           </nav>
 
           {/* Mobile Search */}
-          <div className="md:hidden ml-auto w-full">
+          <div className="md:hidden w-full mt-2">
             <SearchBar />
           </div>
         </div>

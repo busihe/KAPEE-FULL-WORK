@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline"; // Heroicons
 
 interface Product {
   _id?: string;
   name: string;
   price: number;
   description: string;
-  image?: string; // base64 string from MongoDB
+  image?: string;
 }
 
 function Products() {
@@ -25,7 +26,6 @@ function Products() {
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  // Fetch products
   const fetchProducts = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/products");
@@ -40,7 +40,6 @@ function Products() {
     fetchProducts();
   }, []);
 
-  // Handle text inputs
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -49,14 +48,12 @@ function Products() {
     setTarget({ ...targetProduct, [e.target.name]: e.target.value });
   };
 
-  // Handle file input
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setImageFile(e.target.files[0]);
     }
   };
 
-  // Add new product
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -81,7 +78,6 @@ function Products() {
     }
   };
 
-  // Delete product
   const handleDelete = async (id: string) => {
     try {
       const res = await fetch(`http://localhost:5000/api/products/${id}`, {
@@ -95,7 +91,6 @@ function Products() {
     }
   };
 
-  // Start editing
   const handleEdit = (product: Product) => {
     setEditingProductId(product._id || null);
     setEditingProduct({
@@ -106,7 +101,6 @@ function Products() {
     });
   };
 
-  // Update product
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingProductId) return;
@@ -138,129 +132,148 @@ function Products() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen p-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Products Page</h1>
+    <div className="bg-gray-50 min-h-screen py-8 pl-0 pr-4">
+      <div className="max-w-xl mr-0">
+        <h1 className="text-2xl sm:text-3xl font-semibold mb-6 text-gray-800">
+          🛒 Products Page
+        </h1>
 
-      {/* Product Table */}
-      <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-800">Products List</h2>
-        <table className="w-full table-auto border-collapse">
-          <thead>
-            <tr className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white">
-              <th className="border px-6 py-3">Image</th>
-              <th className="border px-6 py-3">Name</th>
-              <th className="border px-6 py-3">Price</th>
-              <th className="border px-6 py-3">Description</th>
-              <th className="border px-6 py-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product._id} className="hover:bg-gray-50 transition-colors">
-                <td className="border px-4 py-3">
-                  {product.image && (
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-16 h-16 object-cover rounded-lg"
-                    />
-                  )}
-                </td>
-                <td className="border px-4 py-3 text-gray-800">{product.name}</td>
-                <td className="border px-4 py-3 text-gray-600">${product.price}</td>
-                <td className="border px-4 py-3 text-gray-600">{product.description}</td>
-                <td className="border px-4 py-3 space-x-2">
-                  <button
-                    onClick={() => handleEdit(product)}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:bg-blue-700 transform hover:scale-105"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => product._id && handleDelete(product._id!)}
-                    className="bg-red-600 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:bg-red-700 transform hover:scale-105"
-                  >
-                    Delete
-                  </button>
-                </td>
+        {/* Product Table */}
+        <div className="bg-white shadow-lg rounded-xl p-4 sm:p-6 mb-10 overflow-x-auto">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-gray-800">
+            Products List
+          </h2>
+          <table className="w-full table-auto border-collapse text-sm sm:text-base">
+            <thead>
+              <tr className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white">
+                <th className="border px-3 py-1 text-left">Image</th>
+                <th className="border px-3 py-1 text-left">Name</th>
+                <th className="border px-3 py-1 text-left">Price</th>
+                <th className="border px-3 py-1 text-left">Description</th>
+                <th className="border px-3 py-1 text-center">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr
+                  key={product._id}
+                  className="hover:bg-gray-100 transition text-gray-800"
+                >
+                  <td className="border px-2 py-1 text-center">
+                    {product.image && (
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded mx-auto"
+                      />
+                    )}
+                  </td>
+                  <td className="border px-2 py-1 break-words max-w-[120px] sm:max-w-none">
+                    {product.name}
+                  </td>
+                  <td className="border px-2 py-1">${product.price}</td>
+                  <td className="border px-2 py-1 max-w-[200px] break-words">
+                    {product.description}
+                  </td>
+                  <td className="border px-2 py-1 text-center">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+                      <button
+                        onClick={() => handleEdit(product)}
+                        className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition-transform hover:scale-105 w-full sm:w-auto text-xs"
+                      >
+                        <PencilIcon className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={() => product._id && handleDelete(product._id)}
+                        className="bg-red-600 text-white p-2 rounded hover:bg-red-700 transition-transform hover:scale-105 w-full sm:w-auto text-xs"
+                      >
+                        <TrashIcon className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      {/* Add/Edit Product Form */}
-      <div className="bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-          {editingProductId ? "Edit Product" : "Add New Product"}
-        </h2>
-        <form
-          onSubmit={editingProductId ? handleUpdate : handleSubmit}
-          className="space-y-6"
-        >
-          <div>
-            <label className="block font-medium text-gray-800">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={editingProductId ? editingProduct.name : newProduct.name}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              required
-            />
-          </div>
+        {/* Add/Edit Product Form */}
+        <div className="bg-white shadow-lg rounded-xl p-4 sm:p-6 mb-8">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-gray-800">
+            {editingProductId ? "Edit Product" : "Add New Product"}
+          </h2>
+          <form
+            onSubmit={editingProductId ? handleUpdate : handleSubmit}
+            className="space-y-4"
+          >
+            <div>
+              <label className="block font-medium text-gray-800 mb-1">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={editingProductId ? editingProduct.name : newProduct.name}
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block font-medium text-gray-800">Price</label>
-            <input
-              type="number"
-              name="price"
-              value={editingProductId ? editingProduct.price : newProduct.price}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              required
-            />
-          </div>
+            <div>
+              <label className="block font-medium text-gray-800 mb-1">Price</label>
+              <input
+                type="number"
+                name="price"
+                min={0}
+                step={0.01}
+                value={editingProductId ? editingProduct.price : newProduct.price}
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block font-medium text-gray-800">Description</label>
-            <textarea
-              name="description"
-              value={editingProductId ? editingProduct.description : newProduct.description}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
+            <div>
+              <label className="block font-medium text-gray-800 mb-1">Description</label>
+              <textarea
+                name="description"
+                rows={2} 
+                /* Reduced row size */
+                value={editingProductId ? editingProduct.description : newProduct.description}
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+              />
+            </div>
 
-          <div>
-            <label className="block font-medium text-gray-800">Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="w-full p-3 border rounded-lg"
-            />
-          </div>
+            <div>
+              <label className="block font-medium text-gray-800 mb-1">Image</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="w-full p-3 border rounded-lg"
+              />
+            </div>
 
-          <div className="flex justify-between">
-            <button
-              type="submit"
-              className="bg-indigo-600 text-white font-bold px-6 py-3 rounded-lg transition-all duration-200 hover:bg-indigo-700 transform hover:scale-105"
-            >
-              {editingProductId ? "Update Product" : "Add Product"}
-            </button>
-
-            {editingProductId && (
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-4">
               <button
-                type="button"
-                onClick={() => setEditingProductId(null)}
-                className="bg-gray-400 text-white px-6 py-3 rounded-lg transition-all duration-200 hover:bg-gray-500 transform hover:scale-105"
+                type="submit"
+                className="bg-indigo-600 text-white font-bold px-6 py-3 rounded-lg transition-transform hover:bg-indigo-700 hover:scale-105 w-full sm:w-auto text-xs"
               >
-                Cancel
+                {editingProductId ? "Update Product" : "Add Product"}
               </button>
-            )}
-          </div>
-        </form>
+
+              {editingProductId && (
+                <button
+                  type="button"
+                  onClick={() => setEditingProductId(null)}
+                  className="bg-gray-400 text-white px-6 py-3 rounded-lg transition-transform hover:bg-gray-500 hover:scale-105 w-full sm:w-auto text-xs"
+                >
+                  Cancel
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

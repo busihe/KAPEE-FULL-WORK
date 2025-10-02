@@ -25,40 +25,43 @@ const Messages = () => {
   };
 
   return (
-    <div className="text-slate-800 dark:text-slate-100">
-      <h1 className="text-3xl font-bold mb-6">Messages</h1>
-      <div className="bg-white dark:bg-slate-800 shadow-lg rounded-xl p-4 overflow-x-auto">
-        <table className="w-full table-auto border-collapse text-sm">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-slate-800 dark:text-slate-100">
+      <h1 className="text-3xl font-bold mb-6 text-center sm:text-left">Messages</h1>
+
+      <div className="bg-white dark:bg-slate-800 shadow-lg rounded-xl overflow-x-auto">
+        <table className="min-w-full text-sm border-collapse">
           <thead>
-            <tr className="bg-amber-500 text-white rounded-t-md">
-              <th className="border-b-2 px-4 py-3 text-left">Sender</th>
-              <th className="border-b-2 px-4 py-3 text-left">Email</th>
-              <th className="border-b-2 px-4 py-3 text-left">Message</th>
-              <th className="border-b-2 px-4 py-3 text-left">Actions</th>
+            <tr className="bg-amber-500 text-white">
+              <th className="text-left px-4 py-3 whitespace-nowrap">Sender</th>
+              <th className="text-left px-4 py-3 whitespace-nowrap">Email</th>
+              <th className="text-left px-4 py-3 whitespace-nowrap">Message</th>
+              <th className="text-left px-4 py-3 whitespace-nowrap">Actions</th>
             </tr>
           </thead>
           <tbody>
             {messages.map((msg) => (
               <tr
                 key={msg.id}
-                className="hover:bg-amber-50 dark:hover:bg-slate-700 transition-colors"
+                className="border-t hover:bg-amber-50 dark:hover:bg-slate-700 transition"
               >
-                <td className="border-b px-4 py-3">{msg.sender}</td>
-                <td className="border-b px-4 py-3">{msg.email}</td>
-                <td className="border-b px-4 py-3">{msg.message}</td>
-                <td className="border-b px-4 py-3 space-x-2">
-                  <button
-                    onClick={() => handleReply(msg.email)}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-md transition"
-                  >
-                    Reply
-                  </button>
-                  <button
-                    onClick={() => handleDelete(msg.id)}
-                    className="bg-rose-500 hover:bg-rose-600 text-white px-3 py-1.5 rounded-md transition"
-                  >
-                    Delete
-                  </button>
+                <td className="px-4 py-3 whitespace-nowrap">{msg.sender}</td>
+                <td className="px-4 py-3 whitespace-nowrap">{msg.email}</td>
+                <td className="px-4 py-3">{msg.message}</td>
+                <td className="px-4 py-3">
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => handleReply(msg.email)}
+                      className="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-md transition"
+                    >
+                      Reply
+                    </button>
+                    <button
+                      onClick={() => handleDelete(msg.id)}
+                      className="bg-rose-500 hover:bg-rose-600 text-white px-3 py-1.5 rounded-md transition"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -66,7 +69,7 @@ const Messages = () => {
         </table>
 
         {messages.length === 0 && (
-          <p className="text-center text-slate-500 mt-4">No messages available.</p>
+          <p className="text-center text-slate-500 py-6">No messages available.</p>
         )}
       </div>
     </div>

@@ -27,19 +27,19 @@ export default function Cart() {
 
   return (
     <div className="max-w-4xl mx-auto my-12 px-4">
-      <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center md:text-left">Your Cart</h1>
 
       {cart.length === 0 ? (
-        <p className="text-gray-600">Your cart is empty.</p>
+        <p className="text-gray-600 text-center">Your cart is empty.</p>
       ) : (
         <>
           <ul className="space-y-4">
             {cart.map((item) => (
               <li
                 key={item.id}
-                className="flex justify-between items-center bg-white p-4 rounded shadow"
+                className="flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded shadow"
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 w-full md:w-auto">
                   <img
                     src={item.image}
                     alt={item.title}
@@ -48,22 +48,21 @@ export default function Cart() {
                   <div>
                     <h3 className="font-semibold">{item.title}</h3>
                     <p className="text-gray-500">
-                      ${item.price} × {item.quantity}
+                      ${item.price.toFixed(2)} × {item.quantity}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 mt-4 md:mt-0">
                   {/* Quantity controls */}
                   <button
-                    onClick={() =>
-                      addToCart({ ...item, quantity: 1 }) // increase
-                    }
-                    className="px-3 py-1 bg-yellow-400 rounded hover:bg-yellow-500"
+                    onClick={() => addToCart({ ...item, quantity: 1 })} // increase
+                    className="px-3 py-1 bg-yellow-400 rounded hover:bg-yellow-500 transition"
+                    aria-label={`Increase quantity of ${item.title}`}
                   >
                     +
                   </button>
-                  <span>{item.quantity}</span>
+                  <span className="min-w-[20px] text-center">{item.quantity}</span>
                   <button
                     onClick={() => {
                       if (item.quantity > 1) {
@@ -73,7 +72,8 @@ export default function Cart() {
                         removeFromCart(item.id); // remove if only 1 left
                       }
                     }}
-                    className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400"
+                    className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 transition"
+                    aria-label={`Decrease quantity of ${item.title}`}
                   >
                     -
                   </button>
@@ -81,7 +81,8 @@ export default function Cart() {
                   {/* Remove */}
                   <button
                     onClick={() => removeFromCart(item.id)}
-                    className="text-red-500 hover:underline ml-3"
+                    className="text-red-500 hover:underline ml-3 whitespace-nowrap"
+                    aria-label={`Remove ${item.title} from cart`}
                   >
                     Remove
                   </button>
@@ -90,18 +91,18 @@ export default function Cart() {
             ))}
           </ul>
 
-          <div className="mt-6 flex justify-between items-center">
-            <h2 className="text-xl font-bold">Total: ${total.toFixed(2)}</h2>
-            <div className="flex gap-3">
+          <div className="mt-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+            <h2 className="text-xl font-bold text-center md:text-left">Total: ${total.toFixed(2)}</h2>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
               <button
                 onClick={handlePlaceOrder}
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
               >
                 Place Order
               </button>
               <button
                 onClick={clearCart}
-                className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
+                className="bg-gray-200 px-6 py-2 rounded hover:bg-gray-300 transition"
               >
                 Clear Cart
               </button>

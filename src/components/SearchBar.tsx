@@ -30,7 +30,8 @@ export default function SearchBar() {
   }, [query, products]);
 
   return (
-    <div className="relative w-full max-w-2xl">
+    <div className="relative w-full px-4 sm:px-0 max-w-full sm:max-w-2xl mx-auto">
+      {/* Search Form */}
       <form
         onSubmit={(e) => e.preventDefault()}
         className="
@@ -42,9 +43,7 @@ export default function SearchBar() {
           shadow-sm
           focus-within:border-yellow-400
           focus-within:shadow-md
-          transition
-          duration-300
-          ease-in-out
+          transition duration-300 ease-in-out
         "
         aria-label="site search"
       >
@@ -55,13 +54,11 @@ export default function SearchBar() {
             w-full
             px-4
             py-3
-            outline-none
+            text-sm
             text-gray-700
             placeholder-gray-400
-            text-sm
-            transition
-            duration-200
-            ease-in-out
+            outline-none
+            transition duration-200 ease-in-out
           "
           placeholder="Search products..."
           aria-label="Search products"
@@ -69,38 +66,37 @@ export default function SearchBar() {
         />
         <button
           className="
-            px-5
+            px-4 sm:px-5
             flex
             items-center
             justify-center
             text-yellow-500
             hover:text-yellow-600
-            transition
-            duration-200
-            ease-in-out
+            transition duration-200 ease-in-out
             focus:outline-none
           "
           aria-label="search"
         >
-          <FiSearch className="text-2xl" />
+          <FiSearch className="text-xl sm:text-2xl" />
         </button>
       </form>
 
-      {/* 🔹 Search dropdown results */}
+      {/* Search Dropdown Results */}
       {results.length > 0 && (
-        <ul className="
-          absolute
-          left-0 right-0
-          mt-2
-          max-h-64
-          overflow-y-auto
-          rounded-xl
-          bg-white
-          border
-          border-gray-300
-          shadow-lg
-          z-40
-        ">
+        <ul
+          className="
+            absolute
+            left-0 right-0
+            mt-2
+            max-h-64
+            overflow-y-auto
+            rounded-xl
+            bg-white
+            border border-gray-300
+            shadow-lg
+            z-50
+          "
+        >
           {results.map((p) => (
             <li key={p.id} className="border-b last:border-none">
               <Link
@@ -111,20 +107,20 @@ export default function SearchBar() {
                   gap-3
                   p-3
                   hover:bg-yellow-50
-                  transition
-                  duration-200
-                  ease-in-out
+                  transition duration-200 ease-in-out
                 "
-                onClick={() => setQuery("")} // Clear input on select
+                onClick={() => setQuery("")}
               >
                 <img
                   src={p.image}
                   alt={p.title}
-                  className="h-12 w-12 rounded object-cover flex-shrink-0"
+                  className="h-10 w-10 sm:h-12 sm:w-12 rounded object-cover flex-shrink-0"
                 />
-                <div>
-                  <p className="font-medium text-gray-900">{p.title}</p>
-                  <p className="text-sm text-yellow-600 font-semibold">${p.price}</p>
+                <div className="overflow-hidden">
+                  <p className="font-medium text-gray-900 text-sm truncate">{p.title}</p>
+                  <p className="text-xs sm:text-sm text-yellow-600 font-semibold truncate">
+                    ${p.price}
+                  </p>
                 </div>
               </Link>
             </li>

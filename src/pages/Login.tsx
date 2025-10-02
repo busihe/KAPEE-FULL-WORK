@@ -30,8 +30,8 @@ export default function Login() {
   };
 
   return (
-    <section className="container-max my-14 px-4">
-      <div className="max-w-md mx-auto bg-white/90 backdrop-blur-md shadow-xl border border-gray-200 rounded-2xl p-8 animate-fade-in-down">
+    <section className="min-h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md mx-auto bg-white/90 backdrop-blur-md shadow-xl border border-gray-200 rounded-2xl p-6 sm:p-8 md:p-10 animate-fade-in-down">
         <h1 className="text-3xl font-extrabold text-yellow-500 mb-2 text-center">
           Welcome Back 👋
         </h1>
@@ -40,6 +40,7 @@ export default function Login() {
         </p>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
+          {/* Email */}
           <div>
             <input
               className="w-full rounded-lg border border-gray-300 px-4 py-3 placeholder-gray-400 text-sm focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-200 transition duration-200"
@@ -51,6 +52,7 @@ export default function Login() {
             />
           </div>
 
+          {/* Password */}
           <div className="relative">
             <input
               className="w-full rounded-lg border border-gray-300 px-4 py-3 placeholder-gray-400 text-sm focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-200 transition duration-200"
@@ -60,14 +62,15 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <a
-              href="/forgot-password"
+            <Link
+              to="/passwordRest"
               className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-yellow-500 hover:text-yellow-600 hover:underline transition"
             >
               Forgot?
-            </a>
+            </Link>
           </div>
 
+          {/* Remember Me */}
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
@@ -79,6 +82,7 @@ export default function Login() {
             </label>
           </div>
 
+          {/* Submit Button */}
           <button
             className="w-full bg-yellow-500 text-white font-semibold py-3 rounded-lg shadow-md hover:bg-yellow-600 hover:shadow-lg active:scale-95 transition-all duration-150"
             type="submit"
@@ -87,7 +91,7 @@ export default function Login() {
           </button>
         </form>
 
-        {/* 👉 Signup link */}
+        {/* Signup link */}
         <p className="mt-6 text-center text-sm text-gray-600">
           Don't have an account?{" "}
           <Link

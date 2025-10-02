@@ -1,6 +1,6 @@
 export default function Support() {
   return (
-    <section className="container-max my-10">
+    <section className="px-4 py-10 max-w-screen-xl mx-auto">
       <h1 className="text-2xl font-bold">Support / FAQ</h1>
       <ul className="mt-4 list-disc pl-6 text-gray-700 space-y-2">
         <li>Shipping & Delivery</li>

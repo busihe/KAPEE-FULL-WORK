@@ -3,7 +3,6 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import Shop from './pages/Shopping';
 import Deals from './pages/Deals';
-import Support from './pages/Support';
 import Account from './pages/Account';
 import Cart from './pages/Cart';
 import Contact from './pages/Contact';
@@ -15,13 +14,12 @@ import Products from './pages/admin/Products';
 import Users from './pages/admin/Users';
 import AdminLayout from './pages/admin/AdminLayout';
 import Orders from './pages/admin/orders';
-import Messages from './pages/admin/contacts';
 import Checkout from './pages/payment';
 
 import { AuthProvider } from './context/AuthProvider';
 import Subscribe from './pages/admin/subscribe';
 import BlogPage from './components/blog';
-
+import PasswordReset from "./pages/passwordRest";
 export default function App() {
   return (
     <BrowserRouter>
@@ -32,13 +30,14 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="shop" element={<Shop />} />
             <Route path="deals" element={<Deals />} />
-            <Route path="support" element={<Support />} />
             <Route path="account" element={<Account />} />
             <Route path="cart" element={<Cart />} />
             <Route path="contact" element={<Contact />} />
             <Route path="login" element={<Login />} />
             <Route path="payment" element={<Checkout />} />
             <Route path="blog" element={<BlogPage />} />
+           <Route path='/passwordRest' element={<PasswordReset />} />
+
           </Route>
 
           {/* Admin Pages with Sidebar */}
@@ -47,7 +46,6 @@ export default function App() {
             <Route path="products" element={<Products />} />
             <Route path="users" element={<Users />} />
             <Route path="orders" element={<Orders />} />
-            <Route path="messages" element={<Messages />} />
             <Route path="subscribe" element={<Subscribe />} />
           </Route>
         </Routes>

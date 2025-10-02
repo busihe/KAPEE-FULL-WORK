@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useCart } from '../hooks/useCart'; // ✅ Make sure the path is correct
+import { useCart } from '../hooks/useCart';
 
 export default function Deals() {
   const [seconds, setSeconds] = useState(3600);
-  const { addToCart } = useCart(); // ✅ Initialize the cart hook
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const id = setInterval(() => setSeconds((s) => Math.max(0, s - 1)), 1000);
@@ -74,12 +74,12 @@ export default function Deals() {
   ];
 
   return (
-    <section className="container-max my-12">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">
+    <section className="container-max px-4 sm:px-6 lg:px-8 my-12">
+      <div className="text-center mb-10">
+        <h1 className="text-3xl font-extrabold text-slate-800 dark:text-black tracking-tight">
           ⚡ Deals of the Day
         </h1>
-        <p className="text-slate-600 dark:text-slate-300 mt-2">
+        <p className="text-slate-600 dark:text-gray-500 mt-2">
           Hurry! Offer ends in{' '}
           <span className="font-semibold text-red-500">
             {`${h}h ${m}m ${s}s`}
@@ -87,16 +87,16 @@ export default function Deals() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {deals.map((deal) => (
           <div
             key={deal.id}
-            className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition p-6"
+            className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition p-6 flex flex-col"
           >
             <img
               src={deal.image}
-              className="w-full h-52 object-cover rounded-xl mb-4"
               alt={deal.title}
+              className="w-full h-52 object-cover rounded-xl mb-4"
             />
             <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
               {deal.title}
@@ -120,7 +120,7 @@ export default function Deals() {
                   quantity: 1,
                 })
               }
-              className="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 px-4 rounded-lg transition"
+              className="mt-auto bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 px-4 rounded-lg transition"
             >
               Grab Deal
             </button>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCart } from '../hooks/useCart';
+import Selling from './selling';
 
 export default function Deals() {
   const [seconds, setSeconds] = useState(3600);
@@ -72,8 +73,8 @@ export default function Deals() {
       image: 'https://sc04.alicdn.com/kf/H3ef6259c4d2c48a4b6404c7d30ef11f6e.jpg',
     },
   ];
-
   return (
+    <>
     <section className="container-max px-4 sm:px-6 lg:px-8 my-12">
       <div className="text-center mb-10">
         <h1 className="text-3xl font-extrabold text-slate-800 dark:text-black tracking-tight">
@@ -127,6 +128,9 @@ export default function Deals() {
           </div>
         ))}
       </div>
+
     </section>
+    <Selling/>
+    </>
   );
 }

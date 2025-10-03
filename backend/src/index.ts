@@ -4,6 +4,8 @@ dotenv.config();
 import express, { Application } from "express";
 import cors from "cors";
 import connectDB from "./config/db";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./swagger";
 
 // Import your routes
 import productRoutes from "./routes/product.routes";
@@ -21,6 +23,9 @@ const app: Application = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Swagger docs
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Define your routes
 app.use("/api/products", productRoutes);

@@ -20,6 +20,9 @@ import { AuthProvider } from './context/AuthProvider';
 import Subscribe from './pages/admin/subscribe';
 import BlogPage from './components/blog';
 import PasswordReset from "./pages/passwordRest";
+import Selling from './pages/selling';
+
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -37,7 +40,7 @@ export default function App() {
             <Route path="payment" element={<Checkout />} />
             <Route path="blog" element={<BlogPage />} />
            <Route path='/passwordRest' element={<PasswordReset />} />
-
+            <Route path='/selling' element={<Selling />} />
           </Route>
 
           {/* Admin Pages with Sidebar */}

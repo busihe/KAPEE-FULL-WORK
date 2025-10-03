@@ -1,14 +1,16 @@
 import { useMemo, useState, useEffect } from "react";
 import Hero from "../components/Hero";
-import CategoryStrip from "../components/CategoryStrip";
+// import CategoryStrip from "../components/CategoryStrip";
 import ProductCard from "../components/ProductCard";
 import { getProducts } from "../utils/api";
 import type { Product } from "../data/products";
+import Selling from "./selling";
+// import Carousel from "./carousel";
 
 const tabs = [
   { key: "featured", label: "Featured" },
-  // { key: "popular", label: "Popular" },
-  // { key: "new", label: "New Arrivals" },
+  { key: "popular", label: "Popular" },
+  { key: "new", label: "New Arrivals" },
 ] as const;
 
 export default function Home() {
@@ -31,8 +33,11 @@ export default function Home() {
 
   return (
     <>
+
+    {/* <Carousel/> */}
       <Hero />
-      <CategoryStrip />
+     
+      {/* <CategoryStrip /> */}
 
       <section className="container-max mt-10">
         <div className="mb-5 flex items-center justify-between">
@@ -62,8 +67,10 @@ export default function Home() {
               <ProductCard key={p.id} product={p} />
             ))}
           </div>
+
         )}
       </section>
+       <Selling />
     </>
   );
 }
